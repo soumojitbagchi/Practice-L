@@ -24,7 +24,7 @@ const login = () => {
       <form
         action=""
         onSubmit={submitHandeler}
-        style={{ position: "relative", zIndex: 1,}}
+        style={{ position: "relative", zIndex: 1 }}
       >
         <div className="main-input">
           <input
@@ -48,9 +48,11 @@ const login = () => {
         <motion.button
           className="active"
           whileTap={{ scale: 0.9 }}
-          whileHover={{backgroundColor:'green'}}
+          whileHover={{ backgroundColor: "green" }}
           onSubmit={submitHandeler}
-        >LogIn</motion.button>
+        >
+          LogIn
+        </motion.button>
       </form>
     </div>
   );
