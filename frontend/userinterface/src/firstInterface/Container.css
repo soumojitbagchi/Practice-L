@@ -138,9 +138,6 @@ form{
 .Container{
   position: sticky;
 }
-span{
-  margin: 2px;
-}
 .about-img{
   margin: 20px; 
   display: flex;
@@ -149,5 +146,7 @@ span{
   height: 100vh;
 }
 .about-img img{
-  height: vhpx;
+  height: 40vh;
+  object-fit: cover;
+  border-radius: 12px;
 }
