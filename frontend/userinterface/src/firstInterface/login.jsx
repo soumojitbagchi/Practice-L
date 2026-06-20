@@ -3,14 +3,31 @@ import { useState } from "react";
 import ThreeBackground from "./components/ThreeBackground";
 import { motion } from "framer-motion";
 import "./Container.css";
+import axios from "axios";
+import { VscEyeClosed } from "react-icons/vsc";
+import { VscEye } from "react-icons/vsc";
 
 const login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const submitHandeler = (e) => {
+  const [showPassword, setShowPassword] = useState(false);
+  const previewChanger = (e) => {
+    setShowPassword((prev) => !prev);
     e.preventDefault();
-    setEmail("");
-    setPassword("");
+  };
+  const submitHandeler = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/auth/login",
+        { email, password },
+      );
+      setEmail("");
+      setPassword("");
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div
@@ -35,21 +52,25 @@ const login = () => {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="enter your registered email"
           />
-          <input
-            type="password"
-            className="logIn-input"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="enter password"
-          />
+          <div className="logIn-input flex justify-between">
+            <input
+              className=" text-center justify-center w-[43vw] outline-0"
+              type={showPassword ? "text" : "password"}
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="enter password"
+            ></input>
+            <motion.button onClick={previewChanger} className=" text-3xl">
+              {showPassword ? <VscEye /> : <VscEyeClosed />}
+            </motion.button>
+          </div>
         </div>
 
         <motion.button
           className="active"
           whileTap={{ scale: 0.9 }}
           whileHover={{ backgroundColor: "green" }}
-          onSubmit={submitHandeler}
         >
           LogIn
         </motion.button>

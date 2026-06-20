@@ -6,14 +6,24 @@ import "./Container.css";
 import { VscEyeClosed } from "react-icons/vsc";
 import { VscEye } from "react-icons/vsc";
 import { useState } from "react";
+import axios from "axios";
 
 const signup = () => {
   const [email, setEmail] = useState("");
-  const [name, setname] = useState("");
-  const [password, setPassword] = useState();
+  const [user, setUser] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const submitHandeler = (e) => {
+  const submitHandeler =async (e) => {
     e.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:8080/api/auth/register",
+        {user,email,password}
+      )
+      console.log(response)
+    } catch (error) {
+      console.log(error)
+    }
+    setUser("")
     setEmail("");
     setPassword("");
   };
@@ -35,9 +45,9 @@ const signup = () => {
             type="text"
             className="logIn-input"
             name="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="enter your name  "
+            value={user}
+            onChange={(e) => setUser(e.target.value)}
+            placeholder="enter your user  "
           />
           <input
             type="email"
@@ -68,7 +78,7 @@ const signup = () => {
           whileHover={{ backgroundColor: "green" }}
           onSubmit={submitHandeler}
         >
-          LogIn
+          SignUp
         </motion.button>
       </form>
     </div>
