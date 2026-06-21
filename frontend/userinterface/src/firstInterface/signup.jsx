@@ -6,26 +6,28 @@ import "./Container.css";
 import { VscEyeClosed } from "react-icons/vsc";
 import { VscEye } from "react-icons/vsc";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useAuth } from "./context/AuthContext";
 
 const signup = () => {
   const [email, setEmail] = useState("");
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const { login: authLogin } = useAuth();
+  const navigate = useNavigate();
   const submitHandeler =async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post("http://localhost:8080/api/auth/register",
         {user,email,password}
       )
-      console.log(response)
+      authLogin(response.data.token);  // saves to localStorage + updates context
+      navigate("/");                     // redirect to home
     } catch (error) {
       console.log(error)
     }
-    setUser("")
-    setEmail("");
-    setPassword("");
   };
   const previewChanger = (e) => {
     setShowPassword((prev) => !prev);

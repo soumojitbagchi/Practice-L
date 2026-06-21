@@ -1,16 +1,20 @@
 import React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ThreeBackground from "./components/ThreeBackground";
 import { motion } from "framer-motion";
 import "./Container.css";
 import axios from "axios";
 import { VscEyeClosed } from "react-icons/vsc";
 import { VscEye } from "react-icons/vsc";
+import { useAuth } from "./context/AuthContext";
 
 const login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const { login: authLogin } = useAuth();
+  const navigate = useNavigate();
   const previewChanger = (e) => {
     setShowPassword((prev) => !prev);
     e.preventDefault();
@@ -22,9 +26,8 @@ const login = () => {
         "http://localhost:8080/api/auth/login",
         { email, password },
       );
-      setEmail("");
-      setPassword("");
-      console.log(response);
+      authLogin(response.data.token);  // saves to localStorage + updates context
+      navigate("/");                    // redirect to home
     } catch (error) {
       console.log(error);
     }
