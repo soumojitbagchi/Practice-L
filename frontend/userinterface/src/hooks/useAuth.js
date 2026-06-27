@@ -3,12 +3,12 @@ import { useAuth } from '../state/AuthContext';
 import { loginUser, registerUser } from '../api/authApi';
 
 /**
- * useAuthActions — orchestration hook for authentication flows.
+ *@description useAuthActions — orchestration hook for authentication flows.
  *
  * Bridges the API layer (authApi) with the State layer (AuthContext).
  * UI components call these methods instead of importing axios directly.
  *
- * Flow: UI → useAuthActions → authApi (HTTP) → AuthContext (state update)
+ * @structure Flow: UI → useAuthActions → authApi (HTTP) → AuthContext (state update)
  */
 export const useAuthActions = () => {
   const auth = useAuth();
